@@ -1,13 +1,12 @@
-const fs = require('fs').promises;
+const fs = require('fs');
 
 const path = './talker.json';
 
-const strikeTalker = async (req, res) => {
-  const talkers = await fs.readFile(path, 'utf8').then((i) => JSON.parse(i));
+const strikeTalker = (req, res) => {
+  const talkers = fs.readFileSync(path, 'utf8');
+  const data = JSON.parse(talkers); // dei uma arrumada na bagunça desse código
 
-  if (!talkers) return res.status(200).send([]);
-
-  return res.status(200).send(talkers);
+  return res.status(200).send(data);
 };
 
 module.exports = strikeTalker;
