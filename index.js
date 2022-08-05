@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { strikeTalker, strikeTalkerById, matrixToken } = require('./services/middlewares');
+const { strikeTalker, strikeTalkerById,
+  matrixToken, checkEmail, checkPassword } = require('./services/middlewares');
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,7 +18,7 @@ app.get('/talker', strikeTalker);
 
 app.get('/talker/:id', strikeTalkerById);
 
-app.post('/login', matrixToken);
+app.post('/login', checkEmail, checkPassword, matrixToken); // 3
 
 app.listen(PORT, () => {
   console.log('Online');
