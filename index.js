@@ -1,10 +1,14 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const { strikeTalker, strikeTalkerById,
-  matrixToken, checkEmail, checkPassword } = require('./services/middlewares');
+// const bodyParser = require('body-parser');
+const checkEmail = require('./services/checkEmail');
+const checkPassword = require('./services/checkPassword');
+const { matrixToken } = require('./services/matrixToken');
+
+const { strikeTalker, strikeTalkerById } = require('./services/middlewares');
 
 const app = express();
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(express.json());
 
 const HTTP_OK_STATUS = 200;
 const PORT = '3000';
