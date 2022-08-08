@@ -1,7 +1,7 @@
 const checkAge = (req, res, next) => {
   const { age } = req.body;
 
-  if (age === !Number && age === '') {
+  if (!age || age === '') {
     return res.status(400).json({ message: 'O campo "age" é obrigatório' });
   }
 

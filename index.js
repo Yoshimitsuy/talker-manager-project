@@ -1,7 +1,12 @@
 const express = require('express');
-// const bodyParser = require('body-parser');
+const checkAge = require('./services/checkAge');
 const checkEmail = require('./services/checkEmail');
+const checkName = require('./services/checkName');
 const checkPassword = require('./services/checkPassword');
+const checkRate = require('./services/checkRate');
+const checkTalk = require('./services/checkTalk');
+const checkWatchedAt = require('./services/checkWatchedAt');
+const { addTalker } = require('./services/addTalker');
 const { matrixToken } = require('./services/matrixToken');
 
 const { strikeTalker, strikeTalkerById } = require('./services/middlewares');
@@ -23,6 +28,9 @@ app.get('/talker', strikeTalker);
 app.get('/talker/:id', strikeTalkerById);
 
 app.post('/login', checkEmail, checkPassword, matrixToken); // 3
+
+app.post('/talker', checkName, checkAge, checkTalk,
+ checkWatchedAt, checkRate, addTalker);
 
 app.listen(PORT, () => {
   console.log('Online');
