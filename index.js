@@ -25,6 +25,21 @@ app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
 
+app.get('/talker/search', (req, res) => {
+  const { q } = req.query;
+  const { authorization } = req.headers;
+
+  if (!authorization) return res.status(401).json({ message: 'Token não encontrado' });
+
+  if (authorization.length !== 16) return res.status(401).json({ message: 'Token inválido' });
+
+  const talkers = readFiles();
+
+  const filterTalker = talkers.filter((t) => t.name.includes(q));
+
+  return res.status(200).json(filterTalker);
+});
+
 app.get('/talker', strikeTalker);
 
 app.get('/talker/:id', strikeTalkerById);
