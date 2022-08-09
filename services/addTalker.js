@@ -15,7 +15,7 @@ const addTalker = (req, res, _next) => {
 
   writeFiles([...readTalkers, newTalker]);
 
-  res.status(201).json(newTalker);
+  return res.status(201).json(newTalker);
 };
 
 module.exports = {
