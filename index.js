@@ -49,6 +49,23 @@ app.put('/talker/:id', checkName, checkAge, checkTalk,
     return res.status(200).json(talkers[indexTalker]);
   });
 
+app.delete('/talker/:id', (req, res) => {
+  const { authorization } = req.headers;
+  const { id } = req.params;
+
+  if (!authorization) return res.status(401).json({ message: 'Token não encontrado' });
+
+  if (authorization.length !== 16) return res.status(401).json({ message: 'Token inválido' });
+
+  const talkers = readFiles();
+  const indexTalker = talkers.findIndex((i) => i.id === Number(id));
+  talkers.splice(indexTalker, 1);
+
+  writeFiles(talkers);
+
+  return res.status(204).end();
+});
+
 app.listen(PORT, () => {
   console.log('Onlinnne');
 });
